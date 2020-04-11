@@ -52,6 +52,7 @@ please use the following:
 
 ```dockerfile
 FROM openzula/base-web-nginx:latest
+COPY ./src/ /var/www/public/
 ```
 
 Then build the image by running the following command in the top most directly of your project:

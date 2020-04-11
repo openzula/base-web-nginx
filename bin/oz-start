@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+if [[ "$CANONICAL_DOMAIN" ]]; then
+    sed "s/{{CANONICAL_DOMAIN}}/${CANONICAL_DOMAIN}/" \
+        /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf
+else
+    echo "oz-start: Required \$CANONICAL_DOMAIN env var is empty" >&2
+    exit 1
+fi
+
+if [[ "$DOMAIN" ]]; then
+    echo "oz-start: Attempting to initialise SSL certificate... "
+
+    if ! /usr/local/bin/oz-sslmanager initial "$DOMAIN"; then
+        echo "oz-start: Failed to initialise SSL certificate" >&2
+        exit 1
+    fi
+else
+    echo "oz-start: Skipping SSL initialisation, \$DOMAIN env variable is empty"
+fi
+
+echo "oz-start: Starting 'cron' service... "
+if ! service cron start; then
+    echo "oz-start: Failed to start cron service" >&2
+    exit 1
+fi
+
+echo "oz-start: Starting nginx (foreground)... "
+nginx -g 'daemon off;'

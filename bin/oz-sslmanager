@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+sysadmin="sysadmin@openzula.org"
+
+case "$1" in
+    initial)
+        /usr/bin/certbot certonly \
+            --non-interactive \
+            --email "$sysadmin" \
+            --agree-tos \
+            --keep-until-expiring \
+            --dns-route53 \
+            --dns-route53-propagation-seconds 30 \
+            --cert-name ebcert \
+            --domains "$2"
+    ;;
+
+    renew)
+        /usr/bin/certbot renew \
+            --non-interactive \
+            --email "$sysadmin" \
+            --agree-tos \
+            --keep-until-expiring \
+            --dns-route53 \
+            --dns-route53-propagation-seconds 30 \
+            --cert-name ebcert
+    ;;
+
+    *)
+        echo "Usage: $0 {initial|renew}"
+        exit 1
+esac

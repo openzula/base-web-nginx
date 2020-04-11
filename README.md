@@ -34,6 +34,32 @@ example policy that you'll need is as follows:
 ```
 
 ## Deployment
+This image is intended to be used as a base only and not to be ran directly. Instead you should create and build your
+own image using the following structure:
+
+```
+./build
+-- aws
+---- web.dockerfile
+./src
+-- application
+-- modules
+-- ...
+```
+
+Your own Dockerfile could be a simple one line, or it could contain various additional instructions. At the very least
+please use the following:
+
+```dockerfile
+FROM openzula/base-web-nginx:latest
+```
+
+Then build the image by running the following command in the top most directly of your project:
+
+```shell script
+docker build -f build/aws/web.dockerfile -t example/web .
+```
+
 All configuration of this Docker image is done at run time instead of build time. This allows you to use the same
 (already built) Docker image and configure it per environment by simply passing in different environmental variables, e.g.
 
@@ -43,7 +69,7 @@ docker run -it --rm -d \
     -e DOMAIN='example.com,www.example.com' \
     -e CANONICAL_DOMAIN='www.example.com' \
     --name example/web \
-    openzula/base-web-ngix
+    example/web
 ```
 
 ## Configuration

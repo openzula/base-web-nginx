@@ -23,7 +23,8 @@ RUN chmod -R 0640 /etc/letsencrypt/live/ebcert/*.pem
 COPY ./bin/oz-sslmanager /usr/local/bin/
 RUN chmod u+x /usr/local/bin/oz-sslmanager
 
-## Nginx default vhost
+## Nginx default vhost & robots
+COPY ./src/robots.txt /var/www/public/
 COPY ./config/vhost.conf /etc/nginx/conf.d/default.conf.template
 
 CMD /usr/local/bin/oz-start

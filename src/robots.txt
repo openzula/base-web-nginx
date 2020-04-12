@@ -1,0 +1,18 @@
+User-agent: ia_archiver
+Disallow: /
+
+User-agent: Baiduspider
+Disallow: /
+
+User-agent: NaverBot
+Disallow: /
+
+User-agent: Yeti
+Disallow: /
+
+User-agent: Sogou
+Disallow: /
+
+User-agent: *
+Disallow: /admin/
+Disallow: /tmp/

@@ -35,7 +35,7 @@ example policy that you'll need is as follows:
 
 ## Deployment
 This image is intended to be used as a base only and not to be ran directly. Instead you should create and build your
-own image using the following structure:
+own image using our standard directory structure as follows:
 
 ```
 ./build
@@ -47,8 +47,8 @@ own image using the following structure:
 -- ...
 ```
 
-Your own Dockerfile could be a simple one line, or it could contain various additional instructions. At the very least
-please use the following:
+The `./build/aws/web.dockerfile` should as a minimum contain the following instructions, however it could of course
+contain any further instructions that you require:
 
 ```dockerfile
 FROM openzula/base-web-nginx:latest

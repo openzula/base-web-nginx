@@ -27,6 +27,7 @@ RUN chmod u+x /usr/local/bin/oz-sslmanager
 COPY ./src/robots.txt /var/www/public/
 COPY ./src/favicon.ico /var/www/public/
 
+RUN mkdir -p /etc/nginx/conf.d/vhost
 COPY ./config/vhost.conf /etc/nginx/conf.d/default.conf.template
 
 CMD /usr/local/bin/oz-start

@@ -81,5 +81,21 @@ The following environmental variables can be used at run time to configure the i
 | `DOMAIN` | Comma separated list of domains to include on the SSL certificate | Yes | - |
 | `CANONICAL_DOMAIN` | The main domain to use. All other `Host`'s will redirect to the this value | Yes | - |
 
+To include additional Nginx configuration for the default SSL vhost, simply copy `*.conf` files to the directory
+`/etc/nginx/conf.d/vhost/` during the build process of the image, e.g.
+
+```shell script
+COPY ./build/aws/config/auth-documents.conf /etc/nginx/conf.d/vhost/
+```
+
+```shell script
+$ cat ./build/aws/config/auth-documents.conf
+location /documents {
+    auth_basic "Documents";
+    auth_basic_user_file /etc/nginx/htpasswd;
+    autoindex on;
+}
+```
+
 ## License
 This project is licensed under the BSD 3-clause license - see [LICENSE.md](LICENSE.md) file for details.

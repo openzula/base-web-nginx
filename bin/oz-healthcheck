@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+make_request() {
+    curl --silent --insecure --fail -o /dev/null --location "$1"
+    ## An exit code of 51 with curl is OK for us, as it could be a
+    ## certificate issue when running locally or via AWS Beanstalk
+    (( "$?" == 0 )) || (( "$?" == 51 ))
+}
+
+if ! make_request http://localhost/ || ! make_request https://localhost/; then
+    exit 1
+fi
+
+exit 0

@@ -6,6 +6,13 @@ EXPOSE 80 443
 RUN apt-get update
 RUN apt-get install -y cron certbot python3-certbot-dns-route53
 
+## Healthcheck
+RUN apt-get install -y curl
+
+COPY ./bin/oz-healthcheck /usr/local/bin/oz-healthcheck
+HEALTHCHECK --interval=30s --timeout=10s CMD /usr/local/bin/oz-healthcheck
+
+## General
 COPY ./bin/oz-start /usr/local/bin/oz-start
 RUN chmod u+x /usr/local/bin/oz-start
 
